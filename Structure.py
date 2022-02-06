@@ -1,4 +1,5 @@
 import affichage,modIntelligence_Gathering
+def main():
+    affichage.printmenu()
 
-affichage.printmenu()
-modIntelligence_Gathering.main()
+    modIntelligence_Gathering.main()
