@@ -1,5 +1,6 @@
 from datetime import datetime
 import os,argparse,re,sys
+dir = ""
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -11,19 +12,21 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 def scan(parameters,ip_target):
-      print(bcolors.BOLD +"[INFO] Start of the information gathering phase."+bcolors.ENDC)
-      print(bcolors.BOLD +"[INFO] Scanning",ip_target,"."+bcolors.ENDC)
-      os.system(f"nmap {parameters}")
-      print(bcolors.OKGREEN+"[INFO] Scan completed."+bcolors.ENDC)
+    print(bcolors.BOLD +"[INFO] Start of the information gathering phase."+bcolors.ENDC)
+    print(bcolors.BOLD +"[INFO] Scanning",ip_target,"."+bcolors.ENDC)
+    os.system(f"nmap {parameters}")
+    print(bcolors.OKGREEN+"[SUCCESS] Scan completed."+bcolors.ENDC)
 
 def newdir():
+    global dir
     date = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
     dir = date+"-SCAN"
     os.system(f"mkdir ./{dir}/")
     return dir
 
 def parameters(ip_target,dir):
-    option_nmap = input("What option do you want for nmap (-A and -oA are already included for the correct running of the app)?")
+    print(bcolors.BOLD +"[INFO] Leave the next information blank if you want the default settings"+bcolors.ENDC)
+    option_nmap = input(bcolors.UNDERLINE+"What option do you want for nmap (-A and -oA are already included for the correct running of the app)?"+bcolors.ENDC)
     parameters = option_nmap+" "+ip_target+" "+f"-oA ./{dir}/otomatic_nmap"+" "+"-A"
     return parameters
 
@@ -46,3 +49,4 @@ def main():
     ip_target = args()
     parameter = parameters(ip_target,dir)
     scan(parameter,ip_target)
+    return dir
