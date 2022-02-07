@@ -1,3 +1,7 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Author             : @BlackRaven
+# Date created       : 4 Feb 2022
 import re,requests,time,modGOBUSTER
 class bcolors:
     HEADER = '\033[95m'
@@ -19,8 +23,7 @@ def portsvuln(dir,ip_target):
                 print(bcolors.BOLD+"[INFO] The service used is",match.group(4)+bcolors.ENDC)
                 port = match.group(1)
                 services = match.group(4)
-                if match.group(3).lower() == "postgresql" or match.group(3).lower() == "https":
-
+                if match.group(3).lower() == "http" or match.group(3).lower() == "https":
                     print(bcolors.BOLD +f"[INFO] {match.group(3)} service detected on port {match.group(1)}."+bcolors.ENDC)
                     good_answer = True
                     while good_answer:
@@ -33,7 +36,6 @@ def portsvuln(dir,ip_target):
                             good_answer = False
                         else:
                             print(bcolors.FAIL+"[ERROR] Please answer with y or n."+bcolors.ENDC)
-
                 serv = services
                 serv = serv.replace(" ","")
                 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
@@ -42,8 +44,7 @@ def portsvuln(dir,ip_target):
                 exploitdb_url = f"https://www.exploit-db.com/search?q={serv}"
                 rapid7_url = f"https://www.rapid7.com/db/?q={serv}"
                 nist_url = f"https://nvd.nist.gov/vuln/search/results?form_type=Basic&results_type=overview&query={serv}&search_type=all&isCpeNameSearch=false"
-                print(bcolors.BOLD+f"\n[INFO] Searching for vulnerability in this service: {services}"+bcolors.ENDC)
-                print(f"[INFO] Research proposal on vulnerability databases for {services}: \nCVE Details: {cve_url}\nSnyk: {snyk_url}\nExploit-DB: {exploitdb_url}\nRapid7: {rapid7_url}\nNVD: {nist_url}")
+                print(bcolors.BOLD+f"[INFO] Research proposal on vulnerability databases for {services}:"+bcolors.ENDC+f" \nCVE Details: {cve_url}\nSnyk: {snyk_url}\nExploit-DB: {exploitdb_url}\nRapid7: {rapid7_url}\nNVD (National Vulnerability Database): {nist_url}")
             else:
                 pass
 def main(dir,ip_target):
